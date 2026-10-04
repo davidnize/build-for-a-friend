@@ -1,0 +1,18 @@
+<%- include('partials/header.ejs') %>
+
+<form method="post" action="/login" class="gate">
+  <div>
+    <label for="name">Your name</label>
+    <input id="name" name="name" required maxlength="40" autocomplete="given-name">
+  </div>
+  <div>
+    <label for="pass">Shared passphrase</label>
+    <input id="pass" name="pass" type="password" required>
+  </div>
+  <button type="submit">Open the diary</button>
+  <% if (error) { %>
+    <p class="status err"><%= error %></p>
+  <% } %>
+</form>
+
+<%- include('partials/footer.ejs') %>

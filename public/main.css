@@ -1,0 +1,295 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #f5f5f5;
+  color: #111;
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100dvh; /* correct height on phones with moving address bars */
+  display: flex;
+  flex-direction: column;
+}
+
+.bar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  height: 8px;
+  background: #2e5c8a;
+}
+
+/* title on the left, verse on the right, lined up with the content column */
+.top {
+  position: sticky;
+  top: 8px;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 12px max(20px, calc((100% - 860px) / 2)) 16px;
+  background: #f5f5f5;
+  box-shadow: 0 8px 14px -8px rgba(0, 0, 0, 0.18);
+}
+
+h1 {
+  margin: 0;
+  font-size: 1.8rem;
+}
+
+.sub {
+  margin: 4px 0 0;
+  color: #777;
+}
+
+/* daily Bible verse */
+.verse {
+  margin: 0;
+  max-width: 600px;
+  text-align: right;
+  color: #2e5c8a;
+  font-family: Georgia, serif;
+  font-style: italic;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+.verse .ref {
+  display: block;
+  margin-top: 4px;
+  font-family: Arial, sans-serif;
+  font-style: normal;
+  font-size: 0.85rem;
+  color: #777;
+}
+
+/* the centred content column */
+main {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 25px 20px;
+  flex: 1;
+}
+
+/* entry form */
+.write {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+textarea {
+  width: 70%;
+  max-width: 100%;
+  min-height: 80px;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 1rem; /* 16px, so iPhones don't zoom in when you tap it */
+  line-height: 1.4;
+  font-family: Arial, sans-serif;
+  background: #f9f9f9;
+  resize: none;
+  overflow-y: hidden; /* no scrollbar, since it grows instead */
+  display: block;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 1rem;
+}
+
+button {
+  padding: 12px 18px;
+  border: none;
+  border-radius: 10px;
+  background: #111;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.status {
+  color: #777;
+}
+
+.err {
+  color: #e53935;
+}
+
+/* weekly recap */
+.recap {
+  background: white;
+  border: 2px dashed #2e5c8a;
+  border-radius: 14px;
+  padding: 15px 20px;
+  margin-bottom: 25px;
+}
+
+.recap h2 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.recap-body {
+  margin: 10px 0 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+/* feed */
+.feed {
+  margin-top: 30px;
+}
+
+.empty {
+  color: #777;
+}
+
+.entry {
+  background: white;
+  max-width: 75%;
+  padding: 15px 20px;
+  border-radius: 14px;
+  margin-bottom: 15px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+}
+
+.theirs {
+  margin-right: auto;
+}
+
+.mine {
+  margin-left: auto;
+  background: #e8f0fa;
+}
+
+.meta {
+  margin: 0;
+  color: #777;
+  font-size: 0.85rem;
+}
+
+.body {
+  margin: 8px 0 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere; /* long words or links never push the page sideways */
+}
+
+/* login */
+.gate {
+  max-width: 360px;
+  margin: 0 auto;
+}
+
+.gate label {
+  display: block;
+  margin: 15px 0 5px;
+}
+
+.gate button {
+  margin-top: 20px;
+}
+
+.sr-only {
+  position: absolute;
+  left: -9999px;
+}
+
+footer {
+  text-align: center;
+  padding: 20px;
+  color: #777;
+}
+
+/* tablets and phones: stack the verse under the title, let the header scroll away */
+@media (max-width: 700px) {
+  .top {
+    position: static;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 12px 16px 16px;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  .verse {
+    text-align: left;
+    font-size: 0.95rem;
+  }
+
+  main {
+    padding: 20px 16px;
+  }
+}
+
+/* phones */
+@media (max-width: 600px) {
+  textarea {
+    width: 100%;
+  }
+
+  .row {
+    width: 100%;
+  }
+
+  .row button {
+    flex: 1;
+  }
+
+  .entry {
+    max-width: 92%;
+  }
+
+  .gate {
+    max-width: 100%;
+  }
+}
+
+/* "new entry" bar */
+.newbar {
+  background: #e8f0fa;
+  border: 1px solid #2e5c8a;
+  border-radius: 10px;
+  padding: 10px 14px;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: space-between;
+}
+
+.newbar[hidden] {
+  display: none;
+}
+
+.newbar button {
+  padding: 6px 12px;
+  font-size: 0.9rem;
+}

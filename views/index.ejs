@@ -1,0 +1,74 @@
+<%- include('partials/header.ejs') %>
+
+<% if (recap) { %>
+  <section class="recap">
+    <h2>This week between us</h2>
+    <p class="meta">Recap written by <%= recap.model %>, not by either of you</p>
+    <p class="recap-body"><%= recap.body %></p>
+  </section>
+<% } %>
+
+<div id="newbar" class="newbar" hidden>
+  New entry from your pen pal. <button type="button" onclick="location.reload()">Refresh</button>
+</div>
+
+<form method="post" action="/entries" class="write">
+  <label for="text" class="sr-only">Write your entry</label>
+  <textarea id="text" name="text" placeholder="<%= question %>" required></textarea>
+  <div class="row">
+    <button type="submit">Post entry</button>
+    <% if (error) { %>
+      <span class="status err"><%= error %></span>
+    <% } %>
+  </div>
+</form>
+
+<section class="feed">
+  <% if (entries.length === 0) { %>
+    <p class="empty">Nothing here yet. Write the first entry above.</p>
+  <% } %>
+  <% entries.forEach(function (entry) { %>
+    <article class="entry <%= entry.author === who ? 'mine' : 'theirs' %>">
+      <p class="meta"><%= entry.author %> · <%= when(entry.created_at) %></p>
+      <p class="body"><%= entry.body %></p>
+    </article>
+  <% }) %>
+</section>
+
+<script>
+  const box = document.getElementById("text");
+
+  // grow the textarea as the person types
+  function grow() {
+    box.style.height = "auto";
+    box.style.height = box.scrollHeight + 2 + "px";
+  }
+  box.addEventListener("input", grow);
+  window.addEventListener("resize", grow);
+  grow();
+
+  // check for new entries every 10 seconds
+  const knownSig = "<%= entries.length %>|<%= entries.length ? new Date(entries[0].created_at).toISOString() : '' %>";
+
+  async function checkForNew() {
+    if (document.hidden) return; // don't poll in a background tab
+    try {
+      const res = await fetch("/latest", { cache: "no-store" });
+      const data = await res.json();
+      if (!data.sig || data.sig === knownSig) return;
+
+      if (box.value.trim() === "") {
+        location.reload(); // nothing typed, safe to reload
+      } else {
+        document.getElementById("newbar").hidden = false; // don't wipe their draft
+      }
+    } catch (e) {
+      // offline or logged out: just try again next time
+    }
+  }
+
+  setInterval(checkForNew, 10000);
+  document.addEventListener("visibilitychange", checkForNew);
+</script>
+
+<%- include('partials/footer.ejs') %>

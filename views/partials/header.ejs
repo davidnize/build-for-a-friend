@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>Between Us</title>
+    <link rel="stylesheet" href="/main.css" />
+  </head>
+  <body>
+    <div class="bar"></div>
+       <header class="top">
+      <div class="brand">
+        <h1>Between Us</h1>
+        <p class="sub">Scars leave beautiful traces.</p>
+      </div>
+      <% if (locals.verse) { %>
+        <p class="verse">
+          “<%= verse.body %>”
+          <span class="ref">— <%= verse.reference %> (KJV)</span>
+        </p>
+      <% } %>
+    </header>
+    <main>
+    
